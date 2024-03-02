@@ -1,24 +1,41 @@
-import { Document, Schema, model, models } from "mongoose";
-
-export interface IUser extends Document {
-  clerkId: string;
-  email: string;
-  planId: string;
-  customerType: string;
-  username?: string;
-  firstName?: string;
-  lastName?: string;
-}
+import { Schema, model, models } from "mongoose";
 
 const UserSchema = new Schema({
-  clerkId: { type: String, required: true, unique: true },
-  email: { type: String, required: true, unique: true },
-  planId: { type: String, required: true },
-  customerType: { type: Number, required: true, default: 1 }, // Enum ???
-  userName: { type: String, unique: true, required: true },
-  firstName: { type: String },
-  lastName: { type: String },
+  clerkId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  photo: {
+    type: String,
+    required: true,
+  },
+  firstName: {
+    type: String,
+  },
+  lastName: {
+    type: String,
+  },
+  planId: {
+    type: Number,
+    default: 1,
+  },
+  creditBalance: {
+    type: Number,
+    default: 10,
+  },
 });
 
 const User = models?.User || model("User", UserSchema);
+
 export default User;
