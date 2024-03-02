@@ -15,7 +15,7 @@ const UserSchema = new Schema({
   email: { type: String, required: true, unique: true },
   planId: { type: String, required: true },
   customerType: { type: Number, required: true, default: 1 }, // Enum ???
-  username: { type: String, unique: true, required: true },
+  userName: { type: String, unique: true, required: true },
   firstName: { type: String },
   lastName: { type: String },
 });
