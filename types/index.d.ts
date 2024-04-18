@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 
+import { IPost } from "@/lib/database/dbmodels/post.model";
+
 // ====== USER PARAMS
 declare type CreateUserParams = {
   clerkId: string;
@@ -15,6 +17,17 @@ declare type UpdateUserParams = {
   lastName: string;
   username: string;
   photo: string;
+};
+
+// ====== ADD POST PARAMS
+declare type AddPostParams = {
+  post: {
+    jobDescription: string;
+    jobType: PostType;
+    keyWords: string;
+  };
+  userId: string;
+  path: string;
 };
 
 // ====== IMAGE PARAMS
@@ -71,6 +84,11 @@ declare type Transformations = {
   removeBackground?: boolean;
 };
 
+declare type JobPostTypes = {
+  jobSeeking?: boolean;
+  jobPosting?: boolean;
+};
+
 // ====== TRANSACTION PARAMS
 declare type CheckoutTransactionParams = {
   plan: string;
@@ -125,6 +143,11 @@ declare type TransformationFormProps = {
   creditBalance: number;
   data?: IImage | null;
   config?: Transformations | null;
+};
+
+declare type PostFormProps = {
+  userId: string;
+  data?: IPost | null;
 };
 
 declare type TransformedImageProps = {

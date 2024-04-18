@@ -15,11 +15,13 @@ const MobileNav = () => {
     <header className="header">
       <Link href="/" className="flex items-center gap-2 md:py-2">
         <Image
-          src="/assets/images/logo-text.svg"
-          alt="logo"
-          width={180}
-          height={28}
+          src="/hattu.png"
+          alt="menu"
+          width={32}
+          height={32}
+          className="cursor-pointer"
         />
+        <h1>TAITURIT-TEST</h1>
       </Link>
       <nav className="flex gap-2">
         <SignedIn>
@@ -37,13 +39,16 @@ const MobileNav = () => {
             </SheetTrigger>
             <SheetContent className="sheet-content sm:w-64">
               <>
-                <Image
-                  src="/assets/images/logo-text.svg"
-                  alt="logo"
-                  width={152}
-                  height={23}
-                />
-
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <Image src="/hattu.png" alt="logo" width={60} height={23} />
+                  <h2>TAITURIT-TEST</h2>
+                </div>
                 <ul className="header-nav_elements">
                   {navLinks.slice(0, 6).map((link) => {
                     const isActiveRoute = link.route === pathname;

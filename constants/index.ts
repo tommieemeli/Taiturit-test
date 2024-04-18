@@ -1,42 +1,27 @@
 export const navLinks = [
   {
-    label: "Home",
+    label: "Etusivu",
     route: "/",
     icon: "/assets/icons/home.svg",
   },
   {
-    label: "Some text",
-    route: "/transformation/add/restore",
-    icon: "/assets/icons/image.svg",
-  },
-  {
-    label: "More random text",
-    route: "/transformation/add/fill",
-    icon: "/assets/icons/stars.svg",
-  },
-  {
-    label: "Is this narnia ?",
-    route: "/transformation/add/remove",
+    label: "Lisää ilmoitus",
+    route: "/ilmoitus/add",
     icon: "/assets/icons/scan.svg",
   },
   {
-    label: "smells fishy..",
-    route: "/transformation/add/recolor",
-    icon: "/assets/icons/filter.svg",
+    label: "Selaa ilmoituksia",
+    route: "/posts",
+    icon: "/assets/icons/stars.svg",
   },
   {
-    label: "Not sure what this is",
-    route: "/transformation/add/removeBackground",
-    icon: "/assets/icons/camera.svg",
-  },
-  {
-    label: "Profile",
+    label: "Profiili",
     route: "/profile",
     icon: "/assets/icons/profile.svg",
   },
   {
-    label: "Subscriptions",
-    route: "/credits",
+    label: "Tilaukset",
+    route: "/subscription",
     icon: "/assets/icons/bag.svg",
   },
 ];
@@ -119,6 +104,17 @@ export const plans = [
   },
 ];
 
+export const postTypes = {
+  addJobListing: {
+    title: "Lisää työtarjous",
+    subTitle: "Tarjoa työtä taiturille",
+  },
+  addOfferListing: {
+    title: "Lisää työhaku ilmoitus",
+    subTitle: "Tarjoa osaamistasi yrityksille",
+  },
+};
+
 export const transformationTypes = {
   restore: {
     type: "restore",
@@ -179,6 +175,22 @@ export const aspectRatioOptions = {
     label: "Phone Portrait (9:16)",
     width: 1000,
     height: 1778,
+  },
+};
+
+export enum PostType {
+  jobPosting = 1,
+  jobSeeking = 2,
+}
+
+export const postTypeOptions = {
+  "Työnhaku ilmoitus": {
+    type: PostType.jobPosting,
+    label: "Työnhaku ilmoitus",
+  },
+  "Työtarjous ilmoitus": {
+    type: PostType.jobSeeking,
+    label: "Työtarjous ilmoitus",
   },
 };
 

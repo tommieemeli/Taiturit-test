@@ -6,11 +6,10 @@ import { handleError } from "../utils";
 import User from "../database/dbmodels/user.model";
 import Image from "../database/dbmodels/image.model";
 import { redirect } from "next/navigation";
-import { AddImageParams, UpdateImageParams } from "@/types";
+import Post from "../database/dbmodels/post.model";
+import { AddPostParams, UpdateImageParams } from "@/types";
 
-// ADD IMAGE
-// TODO: THIS IS DEMO FUNCTION ONLY
-export async function addImage({ image, userId, path }: AddImageParams) {
+export async function addPost({ post, userId, path }: AddPostParams) {
   try {
     await connectToDatabase();
 
@@ -18,13 +17,13 @@ export async function addImage({ image, userId, path }: AddImageParams) {
 
     if (!author) throw new Error("User not found");
 
-    const newImage = await Image.create({
-      ...image,
+    const newPost = await Post.create({
+      ...post,
       author: author._id,
     });
 
     revalidatePath(path);
-    return JSON.parse(JSON.stringify(newImage));
+    return JSON.parse(JSON.stringify(newPost));
   } catch (error) {
     handleError(error);
   }

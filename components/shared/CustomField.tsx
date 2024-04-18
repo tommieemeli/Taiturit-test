@@ -9,13 +9,12 @@ import {
   FormMessage,
   FormLabel,
 } from "../ui/form";
-
-import { formSchema } from "./TransformationForm";
+import { jobPostformSchema } from "./PostForm";
 
 type CustomFieldProps = {
-  control: Control<z.infer<typeof formSchema>> | undefined;
+  control: Control<z.infer<typeof jobPostformSchema>> | undefined;
   render: (props: { field: any }) => React.ReactNode;
-  name: keyof z.infer<typeof formSchema>;
+  name: keyof z.infer<typeof jobPostformSchema>;
   formLabel?: string;
   className?: string;
 };
