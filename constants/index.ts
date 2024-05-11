@@ -184,11 +184,11 @@ export enum PostType {
 }
 
 export const postTypeOptions = {
-  "Työnhaku ilmoitus": {
+  tyonhaku: {
     type: PostType.jobPosting,
     label: "Työnhaku ilmoitus",
   },
-  "Työtarjous ilmoitus": {
+  tyotarjous: {
     type: PostType.jobSeeking,
     label: "Työtarjous ilmoitus",
   },

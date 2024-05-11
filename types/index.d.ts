@@ -24,7 +24,7 @@ declare type AddPostParams = {
   post: {
     jobDescription: string;
     jobType: PostType;
-    keyWords: string;
+    name: string;
   };
   userId: string;
   path: string;

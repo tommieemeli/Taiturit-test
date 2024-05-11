@@ -12,32 +12,31 @@ import {
   Form,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { postTypeOptions } from "@/constants";
+import { PostType, postTypeOptions } from "@/constants";
 import { addPost } from "@/lib/actions/post.actions";
-import { debounce } from "@/lib/utils";
 import { JobPostTypes, PostFormProps } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@radix-ui/react-select";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 export const jobPostformSchema = z.object({
-  publicId: z.string(),
   jobDescription: z.string(),
-  jobType: z.number(),
-  keyWords: z.string(),
+  jobType: z.any(),
+  name: z.string(),
 });
 
 const PostForm = ({ data = null, userId }: PostFormProps) => {
   const [post, setPost] = useState(data);
+  console.log("Post ", post);
 
   const [newPostType, setNewPostType] = useState<JobPostTypes | null>(null);
 
@@ -48,25 +47,24 @@ const PostForm = ({ data = null, userId }: PostFormProps) => {
   const intialValues = {
     jobDescription: Boolean(data) ? data?.jobDescription : "",
     jobType: data?.jobType,
-    keyWords: Boolean(data) ? data?.keyWords : "",
+    name: Boolean(data) ? data?.name : "",
   };
 
-  // define form
   const form = useForm<z.infer<typeof jobPostformSchema>>({
     resolver: zodResolver(jobPostformSchema),
     defaultValues: intialValues,
   });
 
-  // define a submite handler
   async function onSubmit(values: z.infer<typeof jobPostformSchema>) {
-    console.log("Values ", values);
+    setIsSubmitting(true);
+    console.log("Form values ", values);
 
     try {
       const newPost = await addPost({
         post: {
-          jobDescription: "",
-          jobType: "",
-          keyWords: "",
+          jobDescription: values.jobDescription ?? "",
+          jobType: post?.jobType,
+          name: values.name ?? "",
         },
         userId,
         path: "/",
@@ -75,7 +73,7 @@ const PostForm = ({ data = null, userId }: PostFormProps) => {
       if (newPost) {
         form.reset();
         setPost(newPost);
-        router.push(`/transformations/${newPost._id}`);
+        router.push(`/ilmoitus/${newPost._id}`);
       }
     } catch (error) {
       console.log("Error here: ", error);
@@ -93,26 +91,32 @@ const PostForm = ({ data = null, userId }: PostFormProps) => {
     const postType = postTypeOptions[value as JobTypeKey];
     setPost((prevState: any) => ({
       ...prevState,
-      jobType: postType.type,
+      jobType: postType.type as PostType,
     }));
 
     return onChangeField(value);
   };
 
-  const onInputChangeHandler = (
-    value: string,
-    onChangeField: (value: string) => void
-  ) => {
-    debounce(() => {
-      return onChangeField(value);
-    }, 1000);
-  };
+  // const onInputChangeHandler = (
+  //   value: string,
+  //   fieldName: string,
+  //   onChangeField: (value: string) => void
+  // ) => {
+  //   debounce(() => {
+  //     setPost((prevState: any) => ({
+  //       ...prevState,
+  //       [fieldName === "name" ? "name" : ""]: value
+  //     }))
+  //   }, 1000);
+  //   return onChangeField(value);
+  // };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="keyWords"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Nimi</FormLabel>
@@ -156,16 +160,17 @@ const PostForm = ({ data = null, userId }: PostFormProps) => {
           <CustomField
             control={form.control}
             name="jobDescription"
-            formLabel="Lisää työnkuvaus"
-            className="w-full"
             render={({ field }) => (
-              <Input
-                value={field.value}
-                className="input-field"
-                onChange={(e) =>
-                  onInputChangeHandler(e.target.value, field.onChange)
-                }
-              />
+              <FormItem>
+                <FormLabel>Lisää työnkuvaus</FormLabel>
+                <FormControl>
+                  <Input placeholder="Kuvaus" {...field} />
+                </FormControl>
+                <FormDescription>
+                  {"Kuvailea työtä jota haet/tarjoat"}
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
             )}
           />
         </div>

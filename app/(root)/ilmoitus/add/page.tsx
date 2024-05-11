@@ -19,7 +19,7 @@ const AddPostPage = async () => {
       />
 
       <section className="mt-10">
-        <PostForm userId="asd" />
+        <PostForm userId={user._id} />
       </section>
     </>
   );

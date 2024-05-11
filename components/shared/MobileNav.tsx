@@ -1,15 +1,22 @@
 "use client";
 
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import Image from "next/image";
 import { navLinks } from "@/constants";
 import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";
+import { useState } from "react";
 
 const MobileNav = () => {
   const pathname = usePathname();
+  const [navBarOpen, setNavBarOpen] = useState(false);
 
   return (
     <header className="header">
@@ -28,7 +35,7 @@ const MobileNav = () => {
           <UserButton afterSignOutUrl="/" />
 
           <Sheet>
-            <SheetTrigger>
+            <SheetTrigger onClick={() => setNavBarOpen(true)}>
               <Image
                 src="/assets/icons/menu.svg"
                 alt="menu"
@@ -64,13 +71,15 @@ const MobileNav = () => {
                           className="sidebar-link cursor-pointer"
                           href={link.route}
                         >
-                          <Image
-                            src={link.icon}
-                            alt="logo"
-                            width={24}
-                            height={24}
-                          />
-                          {link.label}
+                          <SheetClose>
+                            <Image
+                              src={link.icon}
+                              alt="logo"
+                              width={24}
+                              height={24}
+                            />
+                          </SheetClose>
+                          <SheetClose>{link.label}</SheetClose>
                         </Link>
                       </li>
                     );
