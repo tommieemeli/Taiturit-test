@@ -97,20 +97,6 @@ const PostForm = ({ data = null, userId }: PostFormProps) => {
     return onChangeField(value);
   };
 
-  // const onInputChangeHandler = (
-  //   value: string,
-  //   fieldName: string,
-  //   onChangeField: (value: string) => void
-  // ) => {
-  //   debounce(() => {
-  //     setPost((prevState: any) => ({
-  //       ...prevState,
-  //       [fieldName === "name" ? "name" : ""]: value
-  //     }))
-  //   }, 1000);
-  //   return onChangeField(value);
-  // };
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
