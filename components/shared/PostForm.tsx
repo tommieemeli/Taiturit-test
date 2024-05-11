@@ -142,24 +142,22 @@ const PostForm = ({ data = null, userId }: PostFormProps) => {
           )}
         />
 
-        <div className="prompt-field">
-          <CustomField
-            control={form.control}
-            name="jobDescription"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Lisää työnkuvaus</FormLabel>
-                <FormControl>
-                  <Input placeholder="Kuvaus" {...field} />
-                </FormControl>
-                <FormDescription>
-                  {"Kuvailea työtä jota haet/tarjoat"}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        <CustomField
+          control={form.control}
+          name="jobDescription"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Lisää työnkuvaus</FormLabel>
+              <FormControl>
+                <Input placeholder="Kuvaus" {...field} />
+              </FormControl>
+              <FormDescription>
+                {"Kuvailea työtä jota haet/tarjoat"}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <div className="flex flex-col gap-4">
           <Button
             type="submit"
