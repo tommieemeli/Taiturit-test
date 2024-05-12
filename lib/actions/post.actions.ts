@@ -4,10 +4,9 @@ import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../database/mongoose";
 import { handleError } from "../utils";
 import User from "../database/dbmodels/user.model";
-import Image from "../database/dbmodels/image.model";
 import { redirect } from "next/navigation";
-import Post from "../database/dbmodels/post.model";
-import { AddPostParams, UpdateImageParams } from "@/types";
+import Post, { IPost } from "../database/dbmodels/post.model";
+import { AddPostParams, UpdatePostParams } from "@/types";
 
 export async function addPost({ post, userId, path }: AddPostParams) {
   try {
@@ -29,39 +28,35 @@ export async function addPost({ post, userId, path }: AddPostParams) {
   }
 }
 
-//UPDATE IMAGE
-// TODO: THIS IS DEMO FUNCTION ONLY
-export async function updateImage({ image, userId, path }: UpdateImageParams) {
+//UPDATE POST
+export async function updatePost({ post, userId, path }: UpdatePostParams) {
   try {
     await connectToDatabase();
 
-    const imageToUpdate = await Image.findById(image._id);
+    const postToUpdate = await Post.findById(post._id);
 
-    if (!imageToUpdate || imageToUpdate.author.toHexString() !== userId) {
-      throw new Error("Image not found, or no permissions");
+    if (!postToUpdate || postToUpdate.author.toHexString() !== userId) {
+      throw new Error("Post not found, or no permissions");
     }
 
-    const updatedImage = await Image.findByIdAndUpdate(
-      imageToUpdate._id,
-      image,
-      { new: true }
-    );
+    const updatedPost = await Post.findByIdAndUpdate(postToUpdate._id, post, {
+      new: true,
+    });
 
     revalidatePath(path);
 
-    return JSON.parse(JSON.stringify(updatedImage));
+    return JSON.parse(JSON.stringify(updatedPost));
   } catch (error) {
     handleError(error);
   }
 }
 
-// DELETE IMAGE
-// TODO: THIS IS DEMO FUNCTION ONLY
-export async function deleteImage(imageId: string) {
+// DELETE POST
+export async function deletePost(postId: string) {
   try {
     await connectToDatabase();
 
-    await Image.findByIdAndDelete(imageId);
+    await Post.findByIdAndDelete(postId);
   } catch (error) {
     handleError(error);
   } finally {
@@ -77,14 +72,14 @@ const populateUser = (query: any) =>
   });
 
 // GET BY ID
-export async function getImageById(imageId: string) {
+export async function getPostById(postId: string) {
   try {
     await connectToDatabase();
 
-    const image = await populateUser(Image.findById(imageId));
-    if (!image) throw new Error("Image not found");
+    const post = await populateUser(Post.findById(postId));
+    if (!post) throw new Error("Post not found");
 
-    return JSON.parse(JSON.stringify(image));
+    return JSON.parse(JSON.stringify(post));
   } catch (error) {
     handleError(error);
   }

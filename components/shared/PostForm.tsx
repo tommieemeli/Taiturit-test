@@ -32,6 +32,7 @@ export const jobPostformSchema = z.object({
   jobDescription: z.string(),
   jobType: z.any(),
   name: z.string(),
+  jobTitle: z.string(),
 });
 
 const PostForm = ({ data = null, userId }: PostFormProps) => {
@@ -48,6 +49,7 @@ const PostForm = ({ data = null, userId }: PostFormProps) => {
     jobDescription: Boolean(data) ? data?.jobDescription : "",
     jobType: data?.jobType,
     name: Boolean(data) ? data?.name : "",
+    jobTitle: data?.jobTitle ?? "",
   };
 
   const form = useForm<z.infer<typeof jobPostformSchema>>({
@@ -65,6 +67,7 @@ const PostForm = ({ data = null, userId }: PostFormProps) => {
           jobDescription: values.jobDescription ?? "",
           jobType: post?.jobType,
           name: values.name ?? "",
+          jobTitle: values.jobTitle,
         },
         userId,
         path: "/",
@@ -110,7 +113,24 @@ const PostForm = ({ data = null, userId }: PostFormProps) => {
                 <Input placeholder="Kokonimi" {...field} />
               </FormControl>
               <FormDescription>
-                This is your public display name.
+                Nimi, jos se eroaa ilmoituksen luojasta
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="jobTitle"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Ilmoituksen otsikko</FormLabel>
+              <FormControl>
+                <Input placeholder="Otsikko" {...field} />
+              </FormControl>
+              <FormDescription>
+                Tämä näkyy ilmoituksen otsikkona
               </FormDescription>
               <FormMessage />
             </FormItem>

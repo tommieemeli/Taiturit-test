@@ -2,7 +2,7 @@ import React from "react";
 
 interface OwnProps {
   title: string;
-  subtitle: string;
+  subtitle?: string;
 }
 
 type Props = OwnProps;
