@@ -15,6 +15,11 @@ export const navLinks = [
     icon: "/assets/icons/stars.svg",
   },
   {
+    label: "Selaa taitureita",
+    route: "/taiturit",
+    icon: "/assets/icons/stars.svg",
+  },
+  {
     label: "Profiili",
     route: "/profile",
     icon: "/assets/icons/profile.svg",

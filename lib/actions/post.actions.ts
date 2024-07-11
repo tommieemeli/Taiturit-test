@@ -7,6 +7,7 @@ import User from "../database/dbmodels/user.model";
 import { redirect } from "next/navigation";
 import Post, { IPost } from "../database/dbmodels/post.model";
 import { AddPostParams, UpdatePostParams } from "@/types";
+import mongoose from "mongoose";
 
 export async function addPost({ post, userId, path }: AddPostParams) {
   try {
@@ -18,6 +19,7 @@ export async function addPost({ post, userId, path }: AddPostParams) {
 
     const newPost = await Post.create({
       ...post,
+      _id: new mongoose.Types.ObjectId(),
       author: author._id,
     });
 
@@ -83,4 +85,18 @@ export async function getPostById(postId: string) {
   } catch (error) {
     handleError(error);
   }
+}
+
+// GET ALL POSTS
+export async function getAllPosts(): Promise<IPost[]> {
+  try {
+    await connectToDatabase();
+
+    const posts = await populateUser(Post.find());
+    return JSON.parse(JSON.stringify(posts));
+  } catch (error) {
+    handleError(error);
+  }
+
+  return []; // Add a return statement at the end of the function
 }

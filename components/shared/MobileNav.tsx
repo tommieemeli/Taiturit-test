@@ -57,7 +57,7 @@ const MobileNav = () => {
                   <h2>TAITURIT-TEST</h2>
                 </div>
                 <ul className="header-nav_elements">
-                  {navLinks.slice(0, 6).map((link) => {
+                  {navLinks.slice(0, 7).map((link) => {
                     const isActiveRoute = link.route === pathname;
 
                     return (
