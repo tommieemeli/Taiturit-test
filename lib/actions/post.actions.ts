@@ -98,5 +98,18 @@ export async function getAllPosts(): Promise<IPost[]> {
     handleError(error);
   }
 
-  return []; // Add a return statement at the end of the function
+  return [];
+}
+
+export async function getAllPostsByUserId(): Promise<IPost[]> {
+  try {
+    await connectToDatabase();
+
+    const posts = await populateUser(Post.find());
+    return JSON.parse(JSON.stringify(posts));
+  } catch (error) {
+    handleError(error);
+  }
+
+  return [];
 }
